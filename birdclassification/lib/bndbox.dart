@@ -137,7 +137,9 @@ class BndBox extends StatelessWidget {
     return Stack(
       children: model == mobilenet
           ? _renderStrings()
-          : model == posenet ? _renderKeypoints() : _renderBoxes(),
+          : model == posenet
+              ? _renderKeypoints()
+              : _renderBoxes(),
     );
   }
 }

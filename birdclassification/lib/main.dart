@@ -5,7 +5,7 @@ import 'home.dart';
 
 late List<CameraDescription> cameras;
 
-Future<Null> main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     cameras = await availableCameras();
@@ -16,9 +16,12 @@ Future<Null> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'tflite real-time detection',
       theme: ThemeData(
         brightness: Brightness.dark,

@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<dynamic> _recognitions;
+  List<dynamic> _recognitions = [];
   int _imageHeight = 0;
   int _imageWidth = 0;
   String _model = "";
@@ -61,21 +61,9 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  RaisedButton(
-                    child: const Text(ssd),
-                    onPressed: () => onSelect(ssd),
-                  ),
-                  RaisedButton(
-                    child: const Text(yolo),
-                    onPressed: () => onSelect(yolo),
-                  ),
-                  RaisedButton(
+                  ElevatedButton(
                     child: const Text(mobilenet),
                     onPressed: () => onSelect(mobilenet),
-                  ),
-                  RaisedButton(
-                    child: const Text(posenet),
-                    onPressed: () => onSelect(posenet),
                   ),
                 ],
               ),
@@ -87,13 +75,17 @@ class _HomePageState extends State<HomePage> {
                   _model,
                   setRecognitions,
                 ),
-                BndBox(
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: BndBox(
                     _recognitions == null ? [] : _recognitions,
                     math.max(_imageHeight, _imageWidth),
                     math.min(_imageHeight, _imageWidth),
                     screen.height,
                     screen.width,
-                    _model),
+                    _model,
+                  ),
+                ),
               ],
             ),
     );
