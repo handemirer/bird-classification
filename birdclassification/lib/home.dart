@@ -28,13 +28,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadModel() async {
-    String res;
-
-    res = (await Tflite.loadModel(
+    await Tflite.loadModel(
         model: "assets/mobilenet_v1_1.0_224.tflite",
-        labels: "assets/mobilenet_v1_1.0_224.txt"))!;
-
-    print(res);
+        labels: "assets/mobilenet_v1_1.0_224.txt");
   }
 
   onSelect(model) {
@@ -75,16 +71,13 @@ class _HomePageState extends State<HomePage> {
                   _model,
                   setRecognitions,
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: BndBox(
-                    _recognitions == null ? [] : _recognitions,
-                    math.max(_imageHeight, _imageWidth),
-                    math.min(_imageHeight, _imageWidth),
-                    screen.height,
-                    screen.width,
-                    _model,
-                  ),
+                BndBox(
+                  _recognitions,
+                  math.max(_imageHeight, _imageWidth),
+                  math.min(_imageHeight, _imageWidth),
+                  screen.height,
+                  screen.width,
+                  _model,
                 ),
               ],
             ),
