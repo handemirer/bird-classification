@@ -1,30 +1,29 @@
 import 'dart:async';
-import 'package:birdclassification/widgets/home.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
+import 'home.dart';
 
-Future<void> main() async {
-  // Ensure that plugin services are initialized so that `availableCameras()`
-  // can be called before `runApp()`
+late List<CameraDescription> cameras;
+
+Future<Null> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  try {
+    cameras = await availableCameras();
+  } on CameraException catch (e) {
+    print('Error: $e.code\nError Message: $e.message');
+  }
+  runApp(new MyApp());
+}
 
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
-  // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.first;
-
-  runApp(
-    MaterialApp(
-      darkTheme: ThemeData(
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'tflite real-time detection',
+      theme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: Color(0xFFFF00FF),
       ),
-      theme: ThemeData.dark(),
-      home: Home(
-        // Pass the appropriate camera to the TakePictureScreen widget.
-        camera: firstCamera,
-      ),
-    ),
-  );
+      home: HomePage(cameras),
+    );
+  }
 }
