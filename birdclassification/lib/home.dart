@@ -1,8 +1,10 @@
 import 'dart:ffi';
+import 'dart:io';
 
 import 'package:birdclassification/bc_navigator_push.dart';
 import 'package:birdclassification/gallery.dart';
 import 'package:birdclassification/homepage.dart';
+import 'package:birdclassification/screens/ImagePredict.dart';
 import 'package:birdclassification/screens/LiveCamera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -73,7 +75,12 @@ class _HomePageState extends State<HomePage> {
                             .pickImage(source: ImageSource.gallery);
                         if (image != null) {
                           //imageFile = File(image.path);
-                          getBottomSheet();
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                            builder: (context) => ImagePredict(
+                              imageFile: File(image.path),
+                            ),
+                          ));
                         }
                       }),
                       elevation: 0,
@@ -86,7 +93,12 @@ class _HomePageState extends State<HomePage> {
                             .pickImage(source: ImageSource.camera);
                         if (image != null) {
                           //imageFile = File(image.path);
-                          getBottomSheet();
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                            builder: (context) => ImagePredict(
+                              imageFile: File(image.path),
+                            ),
+                          ));
                         }
                       }),
                       elevation: 0,
