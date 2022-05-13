@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'models.dart';
 
 class BndBox extends StatelessWidget {
   final List<dynamic> results;
@@ -134,12 +133,6 @@ class BndBox extends StatelessWidget {
       return lists;
     }
 
-    return Stack(
-      children: model == mobilenet
-          ? _renderStrings()
-          : model == posenet
-              ? _renderKeypoints()
-              : _renderBoxes(),
-    );
+    return Stack(children: _renderStrings());
   }
 }
