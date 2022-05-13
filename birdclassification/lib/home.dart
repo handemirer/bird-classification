@@ -21,7 +21,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(elevation: 0),
+      appBar: AppBar(
+        elevation: 0,
+        title: Text("Bird Classification"),
+        centerTitle: true,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: getBottomSheet,
         child: Icon(Icons.add),
@@ -31,6 +35,10 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset("assets/images/bird.jpeg"),
+            ),
             ElevatedButton(
                 child: const Text("LİVE"),
                 onPressed: () {
