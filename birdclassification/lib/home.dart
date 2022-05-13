@@ -1,98 +1,103 @@
+import 'dart:ffi';
+
 import 'package:birdclassification/bc_navigator_push.dart';
 import 'package:birdclassification/gallery.dart';
 import 'package:birdclassification/homepage.dart';
+import 'package:birdclassification/screens/LiveCamera.dart';
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
-import 'package:tflite/tflite.dart';
-import 'dart:math' as math;
-
-import 'camera.dart';
-import 'bndbox.dart';
+import 'package:image_picker/image_picker.dart';
 import 'models.dart';
 
 class HomePage extends StatefulWidget {
-  final List<CameraDescription> cameras;
-  const HomePage({Key? key, required this.cameras}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<dynamic> _recognitions = [];
-  int _imageHeight = 0;
-  int _imageWidth = 0;
-  String _model = "";
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  loadModel() async {
-    await Tflite.loadModel(
-        model: "assets/mobilenet_v1_1.0_224.tflite",
-        labels: "assets/mobilenet_v1_1.0_224.txt");
-  }
-
-  onSelect(model) {
-    setState(() {
-      _model = model;
-    });
-    loadModel();
-  }
-
-  setRecognitions(recognitions, imageHeight, imageWidth) {
-    setState(() {
-      _recognitions = recognitions;
-      _imageHeight = imageHeight;
-      _imageWidth = imageWidth;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    Size screen = MediaQuery.of(context).size;
     return Scaffold(
-      body: _model == ""
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ElevatedButton(
-                    child: const Text("LİVE"),
-                    onPressed: () => onSelect(mobilenet),
-                  ),
-                  ElevatedButton(
-                    child: const Text("Gallery"),
-                    onPressed: () => bcNavigatorPush(
-                        context: context, page: const Gallery()),
-                  ),
-                  ElevatedButton(
-                    child: const Text("Gallery"),
-                    onPressed: () =>
-                        bcNavigatorPush(context: context, page: HomePage2()),
-                  ),
-                ],
-              ),
-            )
-          : Stack(
+      appBar: AppBar(elevation: 0),
+      floatingActionButton: FloatingActionButton(
+        onPressed: getBottomSheet,
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+                child: const Text("LİVE"),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => LiveCamera(),
+                    ),
+                  );
+                }),
+            ElevatedButton(
+              child: const Text("Gallery"),
+              onPressed: () {
+                //showMediaInputs();
+                //bcNavigatorPush(context: context, page: const Gallery());
+              },
+            ),
+            ElevatedButton(
+              child: const Text("Gallery"),
+              onPressed: () =>
+                  bcNavigatorPush(context: context, page: HomePage2()),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void getBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            margin: const EdgeInsets.all(8),
+            child: Column(
               children: [
-                Camera(
-                  widget.cameras,
-                  _model,
-                  setRecognitions,
-                ),
-                BndBox(
-                  _recognitions,
-                  math.max(_imageHeight, _imageWidth),
-                  math.min(_imageHeight, _imageWidth),
-                  screen.height,
-                  screen.width,
-                  _model,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FloatingActionButton.extended(
+                      onPressed: (() async {
+                        final XFile? image = await ImagePicker()
+                            .pickImage(source: ImageSource.gallery);
+                        if (image != null) {
+                          //imageFile = File(image.path);
+                          getBottomSheet();
+                        }
+                      }),
+                      elevation: 0,
+                      label: Text("Galeriden Seç"),
+                      icon: Icon(Icons.camera_alt_rounded),
+                    ),
+                    FloatingActionButton.extended(
+                      onPressed: (() async {
+                        final XFile? image = await ImagePicker()
+                            .pickImage(source: ImageSource.camera);
+                        if (image != null) {
+                          //imageFile = File(image.path);
+                          getBottomSheet();
+                        }
+                      }),
+                      elevation: 0,
+                      label: Text("Fotoğraf Çek"),
+                      icon: Icon(Icons.camera_alt_rounded),
+                    ),
+                  ],
                 ),
               ],
             ),
-    );
+          );
+        });
   }
 }
