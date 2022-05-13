@@ -77,7 +77,7 @@ class _GalleryState extends State<Gallery> {
                                     labels: "assets/mobilenet_v1_1.0_224.txt");
 
                                 await Tflite.runModelOnImage(
-                                  path: _tempImage!.path,
+                                  path: _tempImage.path,
                                   numResults: 2,
                                   threshold: 0.05,
                                   imageMean: 127.5,

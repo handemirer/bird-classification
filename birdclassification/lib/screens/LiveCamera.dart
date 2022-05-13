@@ -58,35 +58,36 @@ class _LiveCameraState extends State<LiveCamera> {
 
     return Scaffold(
       appBar: AppBar(elevation: 0),
-      body: FutureBuilder(
-          future: getCameras(),
-          builder: (context, snapshot) {
-            if (snapshot.data != null) {
-              return Container(
-                height: (MediaQuery.of(context).size.height * 2) / 3,
-                width: (MediaQuery.of(context).size.width) / 10,
-                child: Stack(
-                  children: [
-                    Camera(
-                      snapshot.data as List<CameraDescription>,
-                      _model,
-                      setRecognitions,
-                    ),
-                    BndBox(
-                      _recognitions,
-                      math.max(_imageHeight, _imageWidth),
-                      math.min(_imageHeight, _imageWidth),
-                      screen.height,
-                      screen.width,
-                      _model,
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              return LinearProgressIndicator();
-            }
-          }),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FutureBuilder(
+            future: getCameras(),
+            builder: (context, snapshot) {
+              if (snapshot.data != null) {
+                return Container(
+                  child: Stack(
+                    children: [
+                      Camera(
+                        snapshot.data as List<CameraDescription>,
+                        _model,
+                        setRecognitions,
+                      ),
+                      BndBox(
+                        _recognitions,
+                        math.max(_imageHeight, _imageWidth),
+                        math.min(_imageHeight, _imageWidth),
+                        screen.height,
+                        screen.width,
+                        _model,
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return LinearProgressIndicator();
+              }
+            }),
+      ),
     );
   }
 }

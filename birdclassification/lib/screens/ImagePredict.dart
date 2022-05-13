@@ -12,28 +12,20 @@ class ImagePredict extends StatefulWidget {
 }
 
 class _ImagePredictState extends State<ImagePredict> {
-  late List _results;
-  @override
-  void initState() {
-    super.initState();
-    loadModel();
-  }
-
-  Future loadModel() async {
-    Tflite.close();
-    String res = (await Tflite.loadModel(
-        model: "assets/model/birdclass.tflite",
-        labels: "assets/model/labels.txt"))!;
-  }
-
   Future<List<dynamic>> imageClassification(File image) async {
+    Tflite.close();
+    await Tflite.loadModel(
+        model: "assets/mobilenet_v1_1.0_224.tflite",
+        labels: "assets/mobilenet_v1_1.0_224.txt");
+
     final List? recognitions = await Tflite.runModelOnImage(
       path: image.path,
-      numResults: 6,
+      numResults: 2,
       threshold: 0.05,
       imageMean: 127.5,
       imageStd: 127.5,
     );
+
     if (recognitions != null) {
       return recognitions;
     } else {
@@ -45,27 +37,24 @@ class _ImagePredictState extends State<ImagePredict> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.file(widget.imageFile),
-          ),
-          FutureBuilder(
-              future: imageClassification(widget.imageFile),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return CircularProgressIndicator();
-                } else if (snapshot.data != null) {
-                  for (var item in snapshot.data as List) {
-                    print(item + "*****");
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Image.file(widget.imageFile),
+            FutureBuilder(
+                future: imageClassification(widget.imageFile),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.data != null) {
+                    return Container();
+                  } else {
+                    return CircularProgressIndicator();
                   }
-                  return Container();
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }),
-        ],
+                }),
+          ],
+        ),
       ),
     );
   }
