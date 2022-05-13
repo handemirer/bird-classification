@@ -1,3 +1,6 @@
+import 'package:birdclassification/bc_navigator_push.dart';
+import 'package:birdclassification/gallery.dart';
+import 'package:birdclassification/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
@@ -9,11 +12,10 @@ import 'models.dart';
 
 class HomePage extends StatefulWidget {
   final List<CameraDescription> cameras;
-
-  HomePage(this.cameras);
+  const HomePage({Key? key, required this.cameras}) : super(key: key);
 
   @override
-  _HomePageState createState() => new _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -28,13 +30,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadModel() async {
-    String res;
-
-    res = (await Tflite.loadModel(
+    await Tflite.loadModel(
         model: "assets/mobilenet_v1_1.0_224.tflite",
-        labels: "assets/mobilenet_v1_1.0_224.txt"))!;
-
-    print(res);
+        labels: "assets/mobilenet_v1_1.0_224.txt");
   }
 
   onSelect(model) {
@@ -62,8 +60,18 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ElevatedButton(
-                    child: const Text(mobilenet),
+                    child: const Text("LİVE"),
                     onPressed: () => onSelect(mobilenet),
+                  ),
+                  ElevatedButton(
+                    child: const Text("Gallery"),
+                    onPressed: () => bcNavigatorPush(
+                        context: context, page: const Gallery()),
+                  ),
+                  ElevatedButton(
+                    child: const Text("Gallery"),
+                    onPressed: () =>
+                        bcNavigatorPush(context: context, page: HomePage2()),
                   ),
                 ],
               ),
