@@ -50,8 +50,8 @@ class _ImagePredictState extends State<ImagePredict> {
         actions: [
           IconButton(
               onPressed: () async {
-                var box = Hive.box("achievements");
-                await box.put("total", firstPredict);
+                var box = Hive.box("predictions");
+                await box.add(firstPredict);
               },
               icon: const Icon(Icons.save))
         ],
@@ -72,7 +72,7 @@ class _ImagePredictState extends State<ImagePredict> {
                         snapshot.data as List<dynamic>;
 
 //burası
-                    firstPredict = _recognitions[0];
+                    //    firstPredict = _recognitions[0];
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
