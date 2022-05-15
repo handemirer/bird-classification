@@ -36,7 +36,9 @@ class _ImagePredictState extends State<ImagePredict> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.save))],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
