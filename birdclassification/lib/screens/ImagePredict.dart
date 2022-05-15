@@ -42,15 +42,41 @@ class _ImagePredictState extends State<ImagePredict> {
         child: Column(
           children: [
             Image.file(widget.imageFile),
+            const SizedBox(height: 16),
             FutureBuilder(
                 future: imageClassification(widget.imageFile),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return CircularProgressIndicator();
                   } else if (snapshot.data != null) {
-                    print(snapshot.data.toString());
-                    print("******");
-                    return Container();
+                    List<dynamic> _recognitions =
+                        snapshot.data as List<dynamic>;
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: 8);
+                        },
+                        shrinkWrap: true,
+                        itemCount: _recognitions.length,
+                        itemBuilder: (context, index) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${_recognitions[index]["label"]}",
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                              Text(
+                                "${(_recognitions[index]["confidence"] * 100).toStringAsFixed(0)}%",
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    );
                   } else {
                     return CircularProgressIndicator();
                   }

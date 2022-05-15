@@ -65,27 +65,30 @@ class _LiveCameraState extends State<LiveCamera> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    ListView.separated(
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(height: 8);
-                      },
-                      shrinkWrap: true,
-                      itemCount: _recognitions.length,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${_recognitions[index]["label"]}",
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              "${(_recognitions[index]["confidence"] * 100).toStringAsFixed(0)}%",
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        );
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: 8);
+                        },
+                        shrinkWrap: true,
+                        itemCount: _recognitions.length,
+                        itemBuilder: (context, index) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${_recognitions[index]["label"]}",
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                              Text(
+                                "${(_recognitions[index]["confidence"] * 100).toStringAsFixed(0)}%",
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ],
                 );
