@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:tflite/tflite.dart';
 
 class ImagePredict extends StatefulWidget {
@@ -15,6 +16,8 @@ class ImagePredict extends StatefulWidget {
 }
 
 class _ImagePredictState extends State<ImagePredict> {
+  var box = Hive.box("predictions");
+
   Future<List<dynamic>> imageClassification(File image) async {
     Tflite.close();
     await Tflite.loadModel(
@@ -38,11 +41,20 @@ class _ImagePredictState extends State<ImagePredict> {
 
   @override
   Widget build(BuildContext context) {
+    String firstPredict = "";
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Tahmin Sonuçları"),
         centerTitle: true,
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.save))],
+        actions: [
+          IconButton(
+              onPressed: () async {
+                var box = Hive.box("achievements");
+                await box.put("total", firstPredict);
+              },
+              icon: const Icon(Icons.save))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -58,6 +70,9 @@ class _ImagePredictState extends State<ImagePredict> {
                   } else if (snapshot.data != null) {
                     List<dynamic> _recognitions =
                         snapshot.data as List<dynamic>;
+
+//burası
+                    firstPredict = _recognitions[0];
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
