@@ -18,7 +18,7 @@ class _LiveCameraState extends State<LiveCamera> {
 
   int _imageHeight = 0;
   int _imageWidth = 0;
-  String _model = "";
+  String _model = "MobileNet";
 
   loadModel() async {
     await Tflite.loadModel(

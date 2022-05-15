@@ -18,13 +18,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(
-          "Bird Classification",
-        ),
-        centerTitle: true,
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: getBottomSheet,
         child: Icon(Icons.add),
@@ -38,31 +31,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         child: Center(
-          child: Column(
-            children: <Widget>[
-              ElevatedButton(
-                  child: const Text("Kamerayla Kuş Keşfet"),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => LiveCamera(),
-                      ),
-                    );
-                  }),
-              // ElevatedButton(
-              //   child: const Text("Gallery"),
-              //   onPressed: () {
-              //     //showMediaInputs();
-              //     //bcNavigatorPush(context: context, page: const Gallery());
-              //   },
-              // ),
-              // ElevatedButton(
-              //   child: const Text("Gallery"),
-              //   onPressed: () =>
-              //       bcNavigatorPush(context: context, page: HomePage2()),
-              // ),
-            ],
-          ),
+          child: ElevatedButton(
+              child: const Text("Kamerayla Kuş Keşfet"),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => LiveCamera(),
+                  ),
+                );
+              }),
         ),
       ),
     );
