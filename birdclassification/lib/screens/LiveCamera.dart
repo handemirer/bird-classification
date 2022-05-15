@@ -44,7 +44,11 @@ class _LiveCameraState extends State<LiveCamera> {
     Size screen = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(elevation: 0),
+      appBar: AppBar(
+        elevation: 0,
+        title: const Text("Kamerayı Kuşa Çevirin"),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder(

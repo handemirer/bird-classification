@@ -37,6 +37,8 @@ class _ImagePredictState extends State<ImagePredict> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text("Tahmin Sonuçları"),
+        centerTitle: true,
         actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.save))],
       ),
       body: Padding(
@@ -49,7 +51,7 @@ class _ImagePredictState extends State<ImagePredict> {
                 future: imageClassification(widget.imageFile),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.data != null) {
                     List<dynamic> _recognitions =
                         snapshot.data as List<dynamic>;
@@ -80,7 +82,7 @@ class _ImagePredictState extends State<ImagePredict> {
                       ),
                     );
                   } else {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
                 }),
           ],
