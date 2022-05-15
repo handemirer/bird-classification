@@ -8,9 +8,8 @@ typedef void Callback(List<dynamic> list, int h, int w);
 class Camera extends StatefulWidget {
   final List<CameraDescription> cameras;
   final Callback setRecognitions;
-  final String model;
 
-  Camera(this.cameras, this.model, this.setRecognitions);
+  const Camera(this.cameras, this.setRecognitions);
 
   @override
   _CameraState createState() => new _CameraState();
@@ -27,7 +26,7 @@ class _CameraState extends State<Camera> {
     if (widget.cameras == null || widget.cameras.length < 1) {
       print('No camera is found');
     } else {
-      controller = new CameraController(
+      controller = CameraController(
         widget.cameras[0],
         ResolutionPreset.low,
       );
@@ -41,8 +40,6 @@ class _CameraState extends State<Camera> {
           if (!isDetecting) {
             isDetecting = true;
 
-            int startTime = DateTime.now().millisecondsSinceEpoch;
-
             Tflite.runModelOnFrame(
               bytesList: img.planes.map((plane) {
                 return plane.bytes;
@@ -54,9 +51,6 @@ class _CameraState extends State<Camera> {
               imageMean: 127.5,
               imageStd: 127.5,
             ).then((recognitions) {
-              int endTime = DateTime.now().millisecondsSinceEpoch;
-              print("Detection took ${endTime - startTime}");
-
               widget.setRecognitions(recognitions!, img.height, img.width);
               isDetecting = false;
             });
