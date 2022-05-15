@@ -26,30 +26,60 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Container(
-        decoration: BoxDecoration(
+        height: double.maxFinite,
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/kus.jpg"),
             fit: BoxFit.cover,
           ),
         ),
-        child: Expanded(
-          child: ListView.builder(
-            itemCount: predictionList.length,
-            itemBuilder: (context, index) {
-              return Container(
-                  color: Colors.pink,
-                  child: Text(
-                    predictionList[index],
-                  ));
-            },
+        child: Stack(children: [
+          SafeArea(
+            child: Column(
+              children: [
+                Container(
+                    width: double.maxFinite,
+                    padding: const EdgeInsets.all(8.0),
+                    color: Colors.white24,
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.history,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          " Eski Tahmin Sonuçları",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )),
+                Container(
+                  height: MediaQuery.of(context).size.height / 5,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    primary: false,
+                    itemCount: predictionList.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          padding: const EdgeInsets.all(8.0),
+                          color: Colors.white24,
+                          child: Text(
+                            predictionList[index],
+                          ));
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+        ]),
       ),
     );
   }
 
   List<String> getPredictions() {
-    List<String> tempList = ["asdasd", "asdasdas"];
+    List<String> tempList = [];
     for (var element in box.values) {
       tempList.add(element);
     }
@@ -95,10 +125,13 @@ class _HomePageState extends State<HomePage> {
                               //imageFile = File(image.path);
                               Navigator.of(context)
                                   .pushReplacement(MaterialPageRoute(
-                                builder: (context) => ImagePredict(
-                                  imageFile: File(image.path),
-                                ),
-                              ));
+                                    builder: (context) => ImagePredict(
+                                      imageFile: File(image.path),
+                                    ),
+                                  ))
+                                  .then((value) => setState(
+                                        () {},
+                                      ));
                             }
                           }),
                           elevation: 0,
@@ -113,10 +146,13 @@ class _HomePageState extends State<HomePage> {
                               //imageFile = File(image.path);
                               Navigator.of(context)
                                   .pushReplacement(MaterialPageRoute(
-                                builder: (context) => ImagePredict(
-                                  imageFile: File(image.path),
-                                ),
-                              ));
+                                    builder: (context) => ImagePredict(
+                                      imageFile: File(image.path),
+                                    ),
+                                  ))
+                                  .then((value) => setState(
+                                        () {},
+                                      ));
                             }
                           }),
                           elevation: 0,
