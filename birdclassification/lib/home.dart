@@ -27,17 +27,6 @@ class _HomePageState extends State<HomePage> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Center(
-          child: ElevatedButton(
-              child: const Text("Kamerayla Kuş Keşfet"),
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => LiveCamera(),
-                  ),
-                );
-              }),
-        ),
       ),
     );
   }
@@ -48,7 +37,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context) {
           return DraggableScrollableSheet(
             expand: false,
-            initialChildSize: 0.3,
+            initialChildSize: 0.45,
             builder: (context, scrollController) {
               return Container(
                 margin: const EdgeInsets.all(8),
@@ -110,6 +99,19 @@ class _HomePageState extends State<HomePage> {
                           icon: Icon(Icons.camera_alt_rounded),
                         ),
                       ],
+                    ),
+                    SizedBox(height: 10),
+                    FloatingActionButton.extended(
+                      onPressed: (() {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => LiveCamera(),
+                          ),
+                        );
+                      }),
+                      elevation: 0,
+                      label: Text("Canlı Kuş Bul"),
+                      icon: Icon(Icons.cast),
                     ),
                   ],
                 ),
