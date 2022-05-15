@@ -13,11 +13,7 @@ class LiveCamera extends StatefulWidget {
 }
 
 class _LiveCameraState extends State<LiveCamera> {
-  // late List<CameraDescription> cameras;
   List<dynamic> _recognitions = [];
-
-  int _imageHeight = 0;
-  int _imageWidth = 0;
 
   loadModel() async {
     await Tflite.loadModel(
@@ -28,8 +24,6 @@ class _LiveCameraState extends State<LiveCamera> {
   setRecognitions(recognitions, imageHeight, imageWidth) {
     setState(() {
       _recognitions = recognitions;
-      _imageHeight = imageHeight;
-      _imageWidth = imageWidth;
     });
   }
 
@@ -57,16 +51,43 @@ class _LiveCameraState extends State<LiveCamera> {
             future: getCameras(),
             builder: (context, snapshot) {
               if (snapshot.data != null) {
-                return Container(
-                  color: Colors.pink,
-                  height: MediaQuery.of(context).size.width,
-                  width: MediaQuery.of(context).size.width,
-                  child: ClipRRect(
-                    child: Camera(
-                      snapshot.data as List<CameraDescription>,
-                      setRecognitions,
+                return Column(
+                  children: [
+                    Container(
+                      color: Colors.pink,
+                      height: screen.width,
+                      width: screen.width,
+                      child: ClipRRect(
+                        child: Camera(
+                          snapshot.data as List<CameraDescription>,
+                          setRecognitions,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 16),
+                    ListView.separated(
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 8);
+                      },
+                      shrinkWrap: true,
+                      itemCount: _recognitions.length,
+                      itemBuilder: (context, index) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${_recognitions[index]["label"]}",
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              "${(_recognitions[index]["confidence"] * 100).toStringAsFixed(0)}%",
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
                 );
               } else {
                 return LinearProgressIndicator();
