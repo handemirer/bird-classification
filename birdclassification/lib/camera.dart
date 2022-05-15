@@ -3,8 +3,6 @@ import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
 
-import 'models.dart';
-
 typedef void Callback(List<dynamic> list, int h, int w);
 
 class Camera extends StatefulWidget {
@@ -45,25 +43,23 @@ class _CameraState extends State<Camera> {
 
             int startTime = DateTime.now().millisecondsSinceEpoch;
 
-            if (widget.model == mobilenet) {
-              Tflite.runModelOnFrame(
-                bytesList: img.planes.map((plane) {
-                  return plane.bytes;
-                }).toList(),
-                imageHeight: img.height,
-                imageWidth: img.width,
-                numResults: 2,
-                threshold: 0.05,
-                imageMean: 127.5,
-                imageStd: 127.5,
-              ).then((recognitions) {
-                int endTime = DateTime.now().millisecondsSinceEpoch;
-                print("Detection took ${endTime - startTime}");
+            Tflite.runModelOnFrame(
+              bytesList: img.planes.map((plane) {
+                return plane.bytes;
+              }).toList(),
+              imageHeight: img.height,
+              imageWidth: img.width,
+              numResults: 2,
+              threshold: 0.05,
+              imageMean: 127.5,
+              imageStd: 127.5,
+            ).then((recognitions) {
+              int endTime = DateTime.now().millisecondsSinceEpoch;
+              print("Detection took ${endTime - startTime}");
 
-                widget.setRecognitions(recognitions!, img.height, img.width);
-                isDetecting = false;
-              });
-            }
+              widget.setRecognitions(recognitions!, img.height, img.width);
+              isDetecting = false;
+            });
           }
         });
       });

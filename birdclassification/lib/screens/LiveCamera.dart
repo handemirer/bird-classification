@@ -45,6 +45,7 @@ class _LiveCameraState extends State<LiveCamera> {
   void initState() {
     super.initState();
     getCameras();
+    loadModel();
   }
 
   Future<List<CameraDescription>> getCameras() async {

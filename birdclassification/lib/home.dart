@@ -1,7 +1,4 @@
 import 'dart:io';
-
-import 'package:birdclassification/bc_navigator_push.dart';
-import 'package:birdclassification/homepage.dart';
 import 'package:birdclassification/screens/ImagePredict.dart';
 import 'package:birdclassification/screens/LiveCamera.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: getBottomSheet,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Container(
@@ -74,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         FloatingActionButton.extended(
                           onPressed: (() async {
