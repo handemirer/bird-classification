@@ -5,7 +5,10 @@ import 'package:tflite/tflite.dart';
 
 class ImagePredict extends StatefulWidget {
   final File imageFile;
-  const ImagePredict({Key? key, required this.imageFile}) : super(key: key);
+  const ImagePredict({
+    Key? key,
+    required this.imageFile,
+  }) : super(key: key);
 
   @override
   State<ImagePredict> createState() => _ImagePredictState();

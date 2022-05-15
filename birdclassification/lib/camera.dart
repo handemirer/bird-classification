@@ -3,16 +3,19 @@ import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
 
-typedef void Callback(List<dynamic> list, int h, int w);
+typedef Callback = void Function(List<dynamic> list, int h, int w);
 
 class Camera extends StatefulWidget {
   final List<CameraDescription> cameras;
   final Callback setRecognitions;
-
-  const Camera(this.cameras, this.setRecognitions);
+  const Camera({
+    Key? key,
+    required this.cameras,
+    required this.setRecognitions,
+  }) : super(key: key);
 
   @override
-  _CameraState createState() => new _CameraState();
+  _CameraState createState() => _CameraState();
 }
 
 class _CameraState extends State<Camera> {
@@ -23,8 +26,7 @@ class _CameraState extends State<Camera> {
   void initState() {
     super.initState();
 
-    if (widget.cameras == null || widget.cameras.length < 1) {
-      print('No camera is found');
+    if (widget.cameras.isEmpty) {
     } else {
       controller = CameraController(
         widget.cameras[0],

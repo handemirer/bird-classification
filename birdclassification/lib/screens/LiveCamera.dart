@@ -1,9 +1,7 @@
-import 'package:birdclassification/bndbox.dart';
 import 'package:birdclassification/camera.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
-import 'dart:math' as math;
 
 class LiveCamera extends StatefulWidget {
   const LiveCamera({Key? key}) : super(key: key);
@@ -63,8 +61,8 @@ class _LiveCameraState extends State<LiveCamera> {
                       width: screen.width,
                       child: ClipRRect(
                         child: Camera(
-                          snapshot.data as List<CameraDescription>,
-                          setRecognitions,
+                          cameras: snapshot.data as List<CameraDescription>,
+                          setRecognitions: setRecognitions,
                         ),
                       ),
                     ),
@@ -97,7 +95,7 @@ class _LiveCameraState extends State<LiveCamera> {
                   ],
                 );
               } else {
-                return LinearProgressIndicator();
+                return const LinearProgressIndicator();
               }
             }),
       ),
