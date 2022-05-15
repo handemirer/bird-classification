@@ -7,10 +7,13 @@ class BndBox extends StatelessWidget {
   final int previewW;
   final double screenH;
   final double screenW;
-  final String model;
-
-  BndBox(this.results, this.previewH, this.previewW, this.screenH, this.screenW,
-      this.model);
+  const BndBox(
+    this.results,
+    this.previewH,
+    this.previewW,
+    this.screenH,
+    this.screenW,
+  );
 
   @override
   Widget build(BuildContext context) {

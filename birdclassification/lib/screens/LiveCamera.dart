@@ -18,19 +18,11 @@ class _LiveCameraState extends State<LiveCamera> {
 
   int _imageHeight = 0;
   int _imageWidth = 0;
-  String _model = "MobileNet";
 
   loadModel() async {
     await Tflite.loadModel(
         model: "assets/mobilenet_v1_1.0_224.tflite",
         labels: "assets/mobilenet_v1_1.0_224.txt");
-  }
-
-  onSelect(model) {
-    setState(() {
-      _model = model;
-    });
-    loadModel();
   }
 
   setRecognitions(recognitions, imageHeight, imageWidth) {
@@ -66,6 +58,7 @@ class _LiveCameraState extends State<LiveCamera> {
             builder: (context, snapshot) {
               if (snapshot.data != null) {
                 return Container(
+<<<<<<< HEAD
                   color: Colors.pink,
                   height: MediaQuery.of(context).size.width,
                   width: MediaQuery.of(context).size.width,
@@ -75,6 +68,22 @@ class _LiveCameraState extends State<LiveCamera> {
                       _model,
                       setRecognitions,
                     ),
+=======
+                  child: Stack(
+                    children: [
+                      Camera(
+                        snapshot.data as List<CameraDescription>,
+                        setRecognitions,
+                      ),
+                      BndBox(
+                        _recognitions,
+                        math.max(_imageHeight, _imageWidth),
+                        math.min(_imageHeight, _imageWidth),
+                        screen.height,
+                        screen.width,
+                      ),
+                    ],
+>>>>>>> 160ab31121c9a37a7947912b0b6e05c3e341cdf7
                   ),
                 );
               } else {
