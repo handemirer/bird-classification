@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:birdclassification/screens/ImagePredict.dart';
 import 'package:birdclassification/screens/LiveCamera.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,8 +13,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var box = Hive.box("predictions");
+
   @override
   Widget build(BuildContext context) {
+    List<String> predictionList = getPredictions();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: getBottomSheet,
@@ -27,8 +32,28 @@ class _HomePageState extends State<HomePage> {
             fit: BoxFit.cover,
           ),
         ),
+        child: Expanded(
+          child: ListView.builder(
+            itemCount: predictionList.length,
+            itemBuilder: (context, index) {
+              return Container(
+                  color: Colors.pink,
+                  child: Text(
+                    predictionList[index],
+                  ));
+            },
+          ),
+        ),
       ),
     );
+  }
+
+  List<String> getPredictions() {
+    List<String> tempList = ["asdasd", "asdasdas"];
+    for (var element in box.values) {
+      tempList.add(element);
+    }
+    return tempList;
   }
 
   void getBottomSheet() {
