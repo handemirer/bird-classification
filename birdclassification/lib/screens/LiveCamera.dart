@@ -66,22 +66,15 @@ class _LiveCameraState extends State<LiveCamera> {
             builder: (context, snapshot) {
               if (snapshot.data != null) {
                 return Container(
-                  child: Stack(
-                    children: [
-                      Camera(
-                        snapshot.data as List<CameraDescription>,
-                        _model,
-                        setRecognitions,
-                      ),
-                      BndBox(
-                        _recognitions,
-                        math.max(_imageHeight, _imageWidth),
-                        math.min(_imageHeight, _imageWidth),
-                        screen.height,
-                        screen.width,
-                        _model,
-                      ),
-                    ],
+                  color: Colors.pink,
+                  height: MediaQuery.of(context).size.width,
+                  width: MediaQuery.of(context).size.width,
+                  child: ClipRRect(
+                    child: Camera(
+                      snapshot.data as List<CameraDescription>,
+                      _model,
+                      setRecognitions,
+                    ),
                   ),
                 );
               } else {
