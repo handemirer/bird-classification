@@ -20,7 +20,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text("Bird Classification"),
+        title: Text(
+          "Bird Classification",
+        ),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
@@ -28,37 +30,39 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset("assets/images/bird.jpeg")),
-            ),
-            ElevatedButton(
-                child: const Text("Kamerayla Kuş Keşfet"),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => LiveCamera(),
-                    ),
-                  );
-                }),
-            // ElevatedButton(
-            //   child: const Text("Gallery"),
-            //   onPressed: () {
-            //     //showMediaInputs();
-            //     //bcNavigatorPush(context: context, page: const Gallery());
-            //   },
-            // ),
-            // ElevatedButton(
-            //   child: const Text("Gallery"),
-            //   onPressed: () =>
-            //       bcNavigatorPush(context: context, page: HomePage2()),
-            // ),
-          ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/kus.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              ElevatedButton(
+                  child: const Text("Kamerayla Kuş Keşfet"),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => LiveCamera(),
+                      ),
+                    );
+                  }),
+              // ElevatedButton(
+              //   child: const Text("Gallery"),
+              //   onPressed: () {
+              //     //showMediaInputs();
+              //     //bcNavigatorPush(context: context, page: const Gallery());
+              //   },
+              // ),
+              // ElevatedButton(
+              //   child: const Text("Gallery"),
+              //   onPressed: () =>
+              //       bcNavigatorPush(context: context, page: HomePage2()),
+              // ),
+            ],
+          ),
         ),
       ),
     );

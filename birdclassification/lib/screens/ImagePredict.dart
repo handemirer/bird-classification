@@ -48,6 +48,8 @@ class _ImagePredictState extends State<ImagePredict> {
                   if (snapshot.hasError) {
                     return CircularProgressIndicator();
                   } else if (snapshot.data != null) {
+                    print(snapshot.data.toString());
+                    print("******");
                     return Container();
                   } else {
                     return CircularProgressIndicator();
