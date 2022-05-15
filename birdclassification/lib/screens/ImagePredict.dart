@@ -72,7 +72,7 @@ class _ImagePredictState extends State<ImagePredict> {
                         snapshot.data as List<dynamic>;
 
 //burası
-                    //    firstPredict = _recognitions[0];
+                    firstPredict = _recognitions[0]["label"];
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
