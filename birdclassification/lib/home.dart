@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                           }),
                           elevation: 0,
                           label: Text("Galeriden Seç"),
-                          icon: Icon(Icons.camera_alt_rounded),
+                          icon: Icon(Icons.image),
                         ),
                         FloatingActionButton.extended(
                           onPressed: (() async {
